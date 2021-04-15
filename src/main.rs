@@ -4,10 +4,23 @@ use nannou::prelude::*;
 
 mod game;
 use game::*;
-//use game::math::Vector2;
+
+mod lifetimes;
+use lifetimes::*;
+
 
 fn main() {
-    nannou_main();
+    let data_store = DataStore { };
+    let renderer = Renderer { };
+
+    let context = build_context(&renderer, &data_store);
+    tick(&context);
+
+    let state = String::from("running");
+    let state_pushed = context.push_state(Box::new(&state));
+    println!("We pushed new state = {}", state_pushed);
+    
+    //nannou_main();
 }
 
 fn nannou_main() {
